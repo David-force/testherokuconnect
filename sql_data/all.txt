@@ -1,0 +1,141 @@
+CREATE SCHEMA IF NOT EXISTS "vbazurtob_portfolio";
+
+SET search_path TO "vbazurtob_portfolio";
+
+
+CREATE TABLE IF NOT EXISTS "vbazurtob_portfolio".job_type(
+    id SERIAL PRIMARY KEY,
+    description VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS "vbazurtob_portfolio".job(
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(150),
+    description TEXT,
+    job_type_id INTEGER NOT NULL REFERENCES "vbazurtob_portfolio".job_type(id),
+    salary INTEGER,
+    date_posted DATE,
+    status CHAR(1) -- O open, C closed
+);
+
+
+
+CREATE TABLE IF NOT EXISTS "vbazurtob_portfolio".applicant(
+    username VARCHAR(35) PRIMARY KEY,
+    password VARCHAR(128),
+    names VARCHAR(100),
+    lastname VARCHAR(100),
+    address1 VARCHAR(150),
+    address2 VARCHAR(150),
+    country CHAR(2),
+    state VARCHAR(100),
+    zipcode VARCHAR(10),
+    email VARCHAR(45)
+    
+);
+
+CREATE TABLE IF NOT EXISTS "vbazurtob_portfolio".applicant_academics(
+    id BIGSERIAL PRIMARY KEY,
+    applicant_id VARCHAR(35) NOT NULL REFERENCES "vbazurtob_portfolio".applicant(username),
+    institution VARCHAR(255) NOT NULL,
+    started DATE NOT NULL,
+    finished DATE ,
+    in_progress CHAR(1) DEFAULT 'N',
+    degree_type VARCHAR(80) NOT NULL,
+    degree_name VARCHAR(150) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "vbazurtob_portfolio".applicant_work_experience(
+    id BIGSERIAL PRIMARY KEY,
+    applicant_id VARCHAR(35) NOT NULL REFERENCES "vbazurtob_portfolio".applicant(username),
+    institution VARCHAR(255) NOT NULL,
+    position VARCHAR(255) NOT NULL,
+    started DATE NOT NULL,
+    finished DATE,
+    in_progress CHAR(1) DEFAULT 'N'
+);
+
+CREATE TABLE IF NOT EXISTS "vbazurtob_portfolio".applicant_skills(
+    id BIGSERIAL PRIMARY KEY,
+    applicant_id VARCHAR(35) NOT NULL REFERENCES "vbazurtob_portfolio".applicant(username),
+    name VARCHAR(100) NOT NULL,
+    proficiency INTEGER NOT NULL -- 1 - 5 Scale    
+);
+
+CREATE TABLE IF NOT EXISTS "vbazurtob_portfolio".job_applicant(
+    id BIGSERIAL PRIMARY KEY,
+    applicant_id VARCHAR(35) NOT NULL REFERENCES "vbazurtob_portfolio".applicant (username),
+    job_id BIGINT NOT NULL REFERENCES "vbazurtob_portfolio".job(id),
+    date_application_sent TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS "vbazurtob_portfolio".hr_user(
+    username VARCHAR(35) PRIMARY KEY,
+    password VARCHAR(128),
+    names VARCHAR(100),
+    lastname VARCHAR(100),
+    email VARCHAR(45),
+    role VARCHAR(15)
+); 
+
+
+GRANT ALL 
+ON ALL TABLES IN SCHEMA "vbazurtob_portfolio" 
+TO hrapp_demo;
+
+GRANT USAGE ON SCHEMA "vbazurtob_portfolio" 
+TO hrapp_demo; -- For viewing data in pgAdmin
+
+ALTER USER hrapp_demo SET search_path to "vbazurtob_portfolio";
+
+-- Grant usage on sequences
+GRANT USAGE ON SEQUENCE "vbazurtob_portfolio".job_id_seq TO hrapp_demo;
+GRANT USAGE ON SEQUENCE "vbazurtob_portfolio".job_type_id_seq TO hrapp_demo;
+GRANT USAGE ON SEQUENCE "vbazurtob_portfolio".applicant_academics_id_seq TO hrapp_demo;
+GRANT USAGE ON SEQUENCE "vbazurtob_portfolio".applicant_work_experience_id_seq TO hrapp_demo;
+GRANT USAGE ON SEQUENCE "vbazurtob_portfolio".applicant_skills_id_seq TO hrapp_demo;
+GRANT USAGE ON SEQUENCE "vbazurtob_portfolio".job_applicant_id_seq TO hrapp_demo;
+
+
+
+
+ALTER DEFAULT PRIVILEGES 
+    FOR ROLE hrapp_demo 
+    IN SCHEMA "vbazurtob_portfolio" 
+    GRANT ALL ON TABLES TO hrapp_demo;
+  
+  
+
+SET search_path TO "vbazurtob_portfolio";
+
+
+INSERT INTO "vbazurtob_portfolio".job_type ("id", description) VALUES (DEFAULT, 'IT');
+INSERT INTO "vbazurtob_portfolio".job_type ("id", description) VALUES (DEFAULT, 'Administrative');
+INSERT INTO "vbazurtob_portfolio".job_type ("id", description) VALUES (DEFAULT, 'Sales');
+INSERT INTO "vbazurtob_portfolio".job_type ("id", description) VALUES (DEFAULT, 'Customer Support');
+INSERT INTO "vbazurtob_portfolio".job_type ("id", description) VALUES (DEFAULT, 'Field');
+INSERT INTO "vbazurtob_portfolio".job_type ("id", description) VALUES (DEFAULT, 'Technical Support');
+
+
+
+-- Demo Applicant user
+INSERT INTO "vbazurtob_portfolio".applicant(
+            username, password, names, lastname, address1, address2, country, 
+            state, zipcode, email)
+    VALUES ('demo', '$2a$10$5ebPOJeVYLUmxo9jQgiHweQQ4gIRT2iTvx6CeE7X26nRIMrsNkgZS', 'Demo', 'Demo U.', 'St', '2005', 'NZ', 
+            'RR', 'X45644', 'demo@abc.com');
+
+
+INSERT INTO "vbazurtob_portfolio".applicant(
+            username, password, names, lastname, address1, address2, country, 
+            state, zipcode, email)
+    VALUES ('abc', '$2a$10$OKpfQs/kMErTVykVNDgPHOxAatoaslUSetOdnvm41D09TIBEzSMSm', 'ABC', 'Demo U.', 'St', '2005', 'NZ', 
+            'RR', 'X45644', 'abc@abc.com');
+            
+            
+-- Demo HR user
+INSERT INTO "vbazurtob_portfolio".hr_user(
+            username, password, names, lastname, email, role)
+    VALUES ('admin', '$2a$10$RCUBOckyEHolcG1iMLegIeeoQuWO70gKjiQxGWy39RK7T2.D9jufC', 'Admin HR', 'Demo User', 'abc@abc.com', 'HR_ADMIN');
+
+ 

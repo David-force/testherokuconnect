@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: chou
+Build-Jdk: 11.0.2
+Implementation-Title: HRRecruitApp
+Implementation-Version: 1
+Implementation-Vendor-Id: org.vbazurtob
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/HRRecruitApp
+Created-By: Maven Integration for Eclipse
+

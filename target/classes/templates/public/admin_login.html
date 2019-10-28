@@ -39,23 +39,23 @@
 				<div class="row">
 					<div class="col s6">
 						<section>
-							<h4 class="secondary-text-color">Sign in as a job applicant</h4>
-							ようこそ、共達フォース株式会社:
+							<h4 class="secondary-text-color">Sign in as an HR recruiter</h4>
+							This is a demo application. You can login with the following demo credentials:
 							<ul>
-								<li>Username: demo</li>
-								<li>Password: demo</li>
+								<li>Username: admin</li>
+								<li>Password: admin</li>
 							</ul>
-							<br>
-							You can also <a th:href="${applicantSignupUrl}">create your own applicant user here</a>
+							
 						</section>					
 					</div>
 					<div class="col s6">
 						
 						
-						<form th:action="${postFormUrl}" method="POST">
-							
-							
+						<form th:action="${loginHrUrl}" method="POST">
+						
 <!-- 							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> -->
+						
+						
 							<div>
 							
 								<div>
@@ -81,7 +81,6 @@
 							<button type="submit" class="btn">
 								<i class="material-icons">lock_open</i>Login
 							</button>
-							
 							<br>
 							<br>
 							
