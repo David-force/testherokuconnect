@@ -180,7 +180,7 @@ Author: Voltaire Bazurto Blacio</description>
 		    </properties>
 <!-- 		    <activation>-->
 <!-- 		        <activeByDefault>true</activeByDefault>-->
-<!-- 		    </activation>-->
+<!-- 		    </activation>--> 
 		    
 		</profile>
 		<profile>
