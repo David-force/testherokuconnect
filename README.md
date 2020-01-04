@@ -6,6 +6,8 @@ A simple Human Resource recruitment application written in Java using Spring 5, 
 
 You can try the live demo in [this URL](https://hrrecruitapp.herokuapp.com/).
 
+## install app
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/heroku/node-js-getting-started)
 ## Download the code
 
 Create a folder for containing the project source code, access the created folder and use git clone with the project url.
