@@ -15,7 +15,7 @@ Create a folder for containing the project source code, access the created folde
 ```
 mkdir hrrecruitapp
 cd hrrecruitapp
-git clone https://github.com/vbazurtob/HRRecruitApp .
+git clone https://github.com/David-force/testherokuconnect.git .
 ```
 
 ## Setup the database
